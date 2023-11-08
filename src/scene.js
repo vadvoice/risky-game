@@ -1,17 +1,17 @@
-import * as React from "react";
-import { Revolver } from "./revolver/revolver";
-import anime from "animejs";
-import { Button } from "./button/button";
-import { BigButton } from "./bigButton/bigButton";
-import { Bullet } from "./bullet/bullet";
+import * as React from 'react';
+import { Revolver } from './revolver/revolver';
+import anime from 'animejs';
+import { Button } from './button/button';
+import { BigButton } from './bigButton/bigButton';
+import { Bullet } from './bullet/bullet';
 import {
   soundBang,
   soundEmptyBullet,
   soundEmptyGunshoot,
   soundGunReload,
   soundGunGetReady,
-  soundGameSoundtrack
-} from "./player/playSource";
+  soundGameSoundtrack,
+} from './player/playSource';
 import {
   animeZoomOutRevolver,
   animeZoomInRevolver,
@@ -21,17 +21,19 @@ import {
   animeGunReload,
   animeBulletPath,
   animeHandHint,
-  animeleftBottom
-} from "./animations";
-import { BulletPath } from "./assets/bulletPath";
-import { Hand } from "./assets/hand";
-import { LuckyHero } from "./assets/img/luckyHero";
-import { FailHeroVideo } from "./assets/video/failHero";
+  animeleftBottom,
+} from './animations';
+import { BulletPath } from './assets/bulletPath';
+import { Hand } from './assets/hand';
+import { LuckyHero } from './assets/img/luckyHero';
+import { FailHeroVideo } from './assets/video/failHero';
+import { useSeoHook } from './hooks/seoHook';
 
 const Scene = () => {
   const gameSoundtrack = soundGameSoundtrack();
+  useSeoHook({ title: ['Risky Revolver', 'Take your risk'] });
   const initialGameState = {
-    revolverClasses: ["revolver"],
+    revolverClasses: ['revolver'],
     isGameStarted: false,
     isAnimating: false,
     isGameOver: false,
@@ -40,10 +42,10 @@ const Scene = () => {
     shotCounter: 0,
     bulletPosition: 0,
     refreshAttempt: 1,
-    isTutorialPassed: +localStorage.getItem("isTutorialPassed"),
+    isTutorialPassed: +localStorage.getItem('isTutorialPassed'),
     isSoundTrackMusicEnabled: true,
     // development mode
-    isDevMode: false
+    isDevMode: false,
   };
   const [gameState, setGameState] = React.useState(initialGameState);
   const [gunLevitation, setGunLevitation] = React.useState();
@@ -59,7 +61,7 @@ const Scene = () => {
     refreshAttempt,
     isTutorialPassed,
     isSoundTrackMusicEnabled,
-    isDevMode
+    isDevMode,
   } = gameState;
 
   const getRandomPosition = (min = 0, max = 6) => {
@@ -68,7 +70,7 @@ const Scene = () => {
 
   // anime timeline
   const tl = anime.timeline({
-    easing: "easeOutExpo"
+    easing: 'easeOutExpo',
   });
 
   const luckyReaction = () => {
@@ -80,9 +82,9 @@ const Scene = () => {
       ...gameState,
       isGameStarted: true,
       isAnimating: true,
-      isTutorialPassed: 1
+      isTutorialPassed: 1,
     });
-    localStorage.setItem("isTutorialPassed", 1);
+    localStorage.setItem('isTutorialPassed', 1);
   };
 
   const initGame = () => {
@@ -92,8 +94,8 @@ const Scene = () => {
       bulletPosition: getRandomPosition(),
       isGameStarted: true,
       isAnimating: false,
-      revolverClasses: ["revolver", "active"],
-      isTutorialPassed: localStorage.getItem("isTutorialPassed")
+      revolverClasses: ['revolver', 'active'],
+      isTutorialPassed: localStorage.getItem('isTutorialPassed'),
     });
   };
 
@@ -108,12 +110,12 @@ const Scene = () => {
       ...initialGameState,
       numberOfShots,
       isGameOver: true,
-      revolverClasses: ["revolver", "exploded"]
+      revolverClasses: ['revolver', 'exploded'],
     });
   };
 
   const onRevolverClick = () => {
-    if (isGameStarted && !isAnimating && revolverClasses.includes("active")) {
+    if (isGameStarted && !isAnimating && revolverClasses.includes('active')) {
       // SHOOT
       anime(animeOnGunShoot);
 
@@ -127,7 +129,7 @@ const Scene = () => {
           ...gameState,
           numberOfShots: numberOfShots + 1,
           shotCounter: shotCounter + 1,
-          refreshAttempt: 1
+          refreshAttempt: 1,
         });
       }
     }
@@ -137,48 +139,48 @@ const Scene = () => {
     soundGunReload.play();
     setGameState({
       ...gameState,
-      revolverClasses: ["revolver"]
+      revolverClasses: ['revolver'],
     });
     tl.add(animeGunSpin).add({
       ...animeGunReload,
       complete: () => {
         setGameState({
           ...gameState,
-          revolverClasses: ["revolver", "active"],
+          revolverClasses: ['revolver', 'active'],
           bulletPosition: getRandomPosition(),
           refreshAttempt: 0,
-          shotCounter: 0
+          shotCounter: 0,
         });
-      }
+      },
     });
   };
 
   React.useEffect(() => {
     if (isGameStarted) {
-      const path = anime.path(".bullet-path path");
+      const path = anime.path('.bullet-path path');
       tl.add({
         ...animeZoomOutRevolver,
         complete: () => {
           soundEmptyBullet.play();
-        }
+        },
       })
         .add({
           ...animeBulletPath(path),
           complete: () => {
             soundGunGetReady.play();
-          }
+          },
         })
         .add({
           ...animeZoomInRevolver,
           complete: () => {
             initGame();
             setGunLevitation(anime(animeGunLevitation));
-          }
+          },
         });
     } else {
       setGameState({
         ...gameState,
-        bullet: true
+        bullet: true,
       });
     }
 
@@ -198,13 +200,14 @@ const Scene = () => {
   }, [isTutorialPassed]);
   React.useEffect(() => {
     anime({
-      targets: ".shoots-counter",
-      scale: [1, 2, 1]
+      targets: '.shoots-counter',
+      scale: [1, 2, 1],
     });
   }, [numberOfShots]);
+
   return (
     <>
-      <div className={isGameOver ? "scene game-over" : "scene"}>
+      <div className={isGameOver ? 'scene game-over' : 'scene'}>
         <BulletPath />
         <LuckyHero />
         {isGameOver && !isAnimating ? <FailHeroVideo /> : null}
@@ -225,10 +228,10 @@ const Scene = () => {
             ) : null}
           </header>
         ) : null}
-        <div className={"revolver-container"}>
+        <div className={'revolver-container'}>
           <Revolver
             onClick={onRevolverClick}
-            className={revolverClasses.join(" ")}
+            className={revolverClasses.join(' ')}
           />
           {isGameOver && !isAnimating ? (
             <h3 className="shoots-counter big">Shots: {numberOfShots}</h3>
@@ -247,7 +250,7 @@ const Scene = () => {
         </div>
         <footer
           onClick={() =>
-            window.open("https://github.com/vadvoice", "_blank").focus()
+            window.open('https://github.com/vadvoice', '_blank').focus()
           }
         >
           <img
