@@ -85,6 +85,7 @@ const Scene = () => {
       isTutorialPassed: 1,
     });
     localStorage.setItem('isTutorialPassed', 1);
+    gameSoundtrack.play();
   };
 
   const initGame = () => {
@@ -182,10 +183,6 @@ const Scene = () => {
         ...gameState,
         bullet: true,
       });
-    }
-
-    if (gameSoundtrack && isSoundTrackMusicEnabled && gameSoundtrack.paused) {
-      gameSoundtrack.play();
     }
 
     return () => {
