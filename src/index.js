@@ -1,15 +1,13 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 
-import { Scene } from "./scene";
+import './styles.scss';
 
-import "./styles.scss";
+import { Scene } from './scene';
 
-class App extends React.Component {
-  render() {
-    return <Scene />;
-  }
-}
-
-const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <Scene />
+  </React.StrictMode>
+);

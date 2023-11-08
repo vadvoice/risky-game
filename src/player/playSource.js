@@ -42,7 +42,6 @@ export const soundEmptyBullet = (() => {
 
 export const soundBang = (() => {
   const audio = audioInstance(gunShoot);
-  audio.play();
   return audio;
 })();
 
