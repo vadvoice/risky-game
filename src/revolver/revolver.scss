@@ -1,0 +1,21 @@
+
+.revolver {
+  position: relative;
+  width: 40vw;
+  transform: translate3d(0, 0, -300px);
+  min-width: 300px;
+  #smoke {
+    display: none;
+  }
+  &.exploded {
+    #smoke {
+      display: block;
+    }
+  }
+  &.active {
+    cursor: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/9632/happy.png"), auto;
+  }
+  @media screen and (max-width: 640px) {
+    width: 80vw;
+  }
+}

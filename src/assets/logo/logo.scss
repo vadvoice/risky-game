@@ -1,0 +1,210 @@
+.logo {
+  @mixin centerer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  * {
+    box-sizing:border-box;
+  }
+  
+  .icon-large {
+    width: 220px;
+    height: 220px;
+    border-radius: 38px;
+    @include centerer;
+  }
+  .icon-bang{
+  background:radial-gradient(circle at center center,#fff,#f0f0f0 );
+  overflow:hidden;
+  }
+  
+  .hat{
+  width:0;
+  height:0;
+  border-top:5px solid transparent;
+  border-left:15px solid #545554 ;
+    border-right:15px solid #545554 ;
+  border-bottom:19px solid #545554;
+  
+  
+  position:relative;
+  margin:36px auto 0;
+  
+  &:before, &:after {
+        content: "";
+        display: block;
+  
+        position: absolute;
+    
+    height:8px;
+    width:16px;
+    background: #545554 ;
+    bottom:-18px;
+  }
+  &:before{
+    right:15px;
+    transform:skewY(6deg)
+  }
+    &:after{
+    left:15px;
+    transform:skewY(-6deg)
+  }
+  }
+  @keyframes right-hand{
+  0%{
+    transform:rotate(0);
+    
+  }
+  50%{
+     transform:skewY(-10deg) rotate(-20deg);
+    
+    border-radius:40%;
+    right:0px;
+    top:-19px;
+  }
+  100%{
+     transform:skewY(10deg) rotate(0deg);
+    
+    border-radius:40%;
+    right:-2px;
+    height:20px;
+  top:-15px;
+  }
+  /*  80%{
+  top:-5px;
+  }
+  100%{
+    transform:skewY(0) rotate(0deg);
+    width:30px;
+    border-radius:15px;
+   right:-12px;
+    
+  }*/
+  
+  }
+  .body{
+  width:0;
+  height:0;
+  border-top:16px solid #787878;
+  border-left:15px solid #a8a8a8;
+    border-right:15px solid #a8a8a8;
+  border-bottom:15px solid #a8a8a8;
+  box-shadow:0 8px 0 0 #787878 ;
+  margin:14px auto; 
+  position:relative;
+  
+  &:before, &:after {
+        content: "";
+        display: block;
+  
+        position: absolute;
+    top:-19px;
+        width:30px;
+    height:30px;
+    border-radius:48%;
+      z-index:-1;
+  }
+  
+  &:before{
+  
+    
+  border-top:7px solid #a8a8a8;
+      border-left:7px solid #a8a8a8;
+    
+     border-bottom:7px solid transparent;
+      border-right:7px solid transparent;
+    
+    right:3px;
+  
+      transform:skewY(10deg);
+  
+  }
+  
+  &:after{
+    border-top:7px solid #a8a8a8;
+      border-left:7px solid  transparent;
+    
+     border-bottom:7px solid transparent;
+      border-right:7px solid #a8a8a8;
+    
+    left:3px;
+    transform:skewY(-10deg);
+  }
+  
+  }
+  
+  .legs{
+  height:10px;
+  background:#e2e2e1 ;
+  position:relative;
+  top:23px;
+  right:95px;
+  &:before, &:after {
+        content: "";
+        display: block;
+  
+        position: absolute;
+    width:7px;
+    height:39px;
+    background:#a8a8a8;
+  right:0;
+    bottom:0
+  }
+  &:after{
+    right:23px;
+  }
+  }
+  .gun{
+  position:absolute;
+  top:105px;
+  width:8px;
+  height:23px;
+  background:#545554 ;
+  }
+  
+  .gun-1{
+  
+  left:87px;
+  
+  &:before{
+    content: "";
+        display: block;
+  
+        position: absolute;
+    
+    width:8px;
+    height:8px;
+      background:#545554 ;
+    top:0;
+    left:-8px;
+  }
+  }
+  .gun-2{
+  right:87px;
+  &:before,&:after{
+    content: "";
+        display: block;
+  
+        position: absolute;
+    
+   
+  }
+  &:before{
+     width:8px;
+    height:8px;
+      background:#545554 ;
+    top:0;
+    right:-8px;
+  }
+  
+  &:after{
+     width:5px;
+    height:10px;
+      background:#8d8d8d  ;
+    top:-45px;
+    right:20px;
+  }
+  }
+}

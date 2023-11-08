@@ -1,0 +1,43 @@
+.bigButton { 
+  user-select: none;
+  $primary-color: red;
+  $primary-shadow-color: rgba(122,17,8,.8);
+
+  $disabled-color: gray;
+  $disabled-shadow-color: darkgray;
+
+  background: $primary-color;
+  text-shadow: 0 3px 1px $primary-shadow-color;
+  box-shadow: 0 8px 0 $primary-shadow-color, 
+    0 15px 20px rgba(0,0,0,.35);
+
+  border-radius: 50%; 
+  width: 100px;
+  height: 100px;
+  border: none;
+  color: white;
+  font-family: Avenir, Arial, sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  transition: .2s all ease-in;
+  outline: none; 
+  cursor: pointer;
+  text-align: center;
+
+  span { position: relative; }
+
+  &.pressed { 
+    padding-top: 3px;
+    transform: translateY(4px);
+    box-shadow: 0 4px 0 rgb(183,0,0),
+      0 8px 6px rgba(0,0,0,.45);
+  }
+  &:disabled {
+    cursor: not-allowed;
+    background: $disabled-color;
+    text-shadow: 0 3px 1px $disabled-shadow-color;
+    box-shadow: 0 8px 0 $disabled-shadow-color, 0 15px 20px rgba(0,0,0,.35);
+    opacity: .5;
+  }
+}
+
