@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/static/css/main.17d6e7bb.css",
-    "main.js": "/static/js/main.f3078955.js",
-    "static/media/soundtrack.wav": "/static/media/soundtrack.81b2567032862eea8d33.wav",
-    "static/media/seriously.png": "/static/media/seriously.75cebb84efc1f203df57.png",
-    "static/media/owch.mp4": "/static/media/owch.0acb64ee5ad2be8616e9.mp4",
-    "static/media/emptyBullet.mp3": "/static/media/emptyBullet.2f3286643c0eb555885a.mp3",
-    "static/media/gunReady.mp3": "/static/media/gunReady.b9913f2e477f73c4a158.mp3",
-    "static/media/gunRealod.mp3": "/static/media/gunRealod.b9913f2e477f73c4a158.mp3",
-    "static/media/gunShoot.mp3": "/static/media/gunShoot.df51ced0a4a8b8e1ee0a.mp3",
-    "static/media/gunEmptyShoot.mp3": "/static/media/gunEmptyShoot.713c628b824df9a75059.mp3",
-    "index.html": "/index.html",
-    "main.17d6e7bb.css.map": "/static/css/main.17d6e7bb.css.map",
-    "main.f3078955.js.map": "/static/js/main.f3078955.js.map"
+    "main.css": "/risky-game/static/css/main.17d6e7bb.css",
+    "main.js": "/risky-game/static/js/main.dc9c23c9.js",
+    "static/media/soundtrack.wav": "/risky-game/static/media/soundtrack.81b2567032862eea8d33.wav",
+    "static/media/seriously.png": "/risky-game/static/media/seriously.75cebb84efc1f203df57.png",
+    "static/media/owch.mp4": "/risky-game/static/media/owch.0acb64ee5ad2be8616e9.mp4",
+    "static/media/emptyBullet.mp3": "/risky-game/static/media/emptyBullet.2f3286643c0eb555885a.mp3",
+    "static/media/gunReady.mp3": "/risky-game/static/media/gunReady.b9913f2e477f73c4a158.mp3",
+    "static/media/gunRealod.mp3": "/risky-game/static/media/gunRealod.b9913f2e477f73c4a158.mp3",
+    "static/media/gunShoot.mp3": "/risky-game/static/media/gunShoot.df51ced0a4a8b8e1ee0a.mp3",
+    "static/media/gunEmptyShoot.mp3": "/risky-game/static/media/gunEmptyShoot.713c628b824df9a75059.mp3",
+    "index.html": "/risky-game/index.html",
+    "main.17d6e7bb.css.map": "/risky-game/static/css/main.17d6e7bb.css.map",
+    "main.dc9c23c9.js.map": "/risky-game/static/js/main.dc9c23c9.js.map"
   },
   "entrypoints": [
     "static/css/main.17d6e7bb.css",
-    "static/js/main.f3078955.js"
+    "static/js/main.dc9c23c9.js"
   ]
 }
