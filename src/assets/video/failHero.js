@@ -1,7 +1,7 @@
 import * as React from "react";
 import videoHero from "./owch.mp4";
 
-export const FailHeroVideo = () => {
+export const FailHeroVideo = ({ muted }) => {
   return (
     <video
       style={{
@@ -12,6 +12,7 @@ export const FailHeroVideo = () => {
         minHeight: "100%"
       }}
       autoPlay
+      muted={muted}
       id="myVideo"
     >
       <source src={videoHero} type="video/mp4" />

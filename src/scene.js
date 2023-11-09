@@ -10,7 +10,6 @@ import {
   soundEmptyGunshoot,
   soundGunReload,
   soundGunGetReady,
-  soundGameSoundtrack,
 } from './player/playSource';
 import {
   animeZoomOutRevolver,
@@ -28,9 +27,10 @@ import { Hand } from './assets/hand';
 import { LuckyHero } from './assets/img/luckyHero';
 import { FailHeroVideo } from './assets/video/failHero';
 import { useSeoHook } from './hooks/seoHook';
+import GameSoundtrackController from './gameSoundTrack';
 
 const Scene = () => {
-  const gameSoundtrack = soundGameSoundtrack();
+  // const gameSoundtrack = soundGameSoundtrack();
   useSeoHook({ title: ['Risky Revolver', 'Take your risk'] });
   const initialGameState = {
     revolverClasses: ['revolver'],
@@ -43,7 +43,7 @@ const Scene = () => {
     bulletPosition: 0,
     refreshAttempt: 1,
     isTutorialPassed: +localStorage.getItem('isTutorialPassed'),
-    isSoundTrackMusicEnabled: true,
+    isSoundEnabled: false,
     // development mode
     isDevMode: false,
   };
@@ -60,7 +60,7 @@ const Scene = () => {
     shotCounter,
     refreshAttempt,
     isTutorialPassed,
-    isSoundTrackMusicEnabled,
+    isSoundEnabled,
     isDevMode,
   } = gameState;
 
@@ -77,6 +77,13 @@ const Scene = () => {
     anime(animeleftBottom);
   };
 
+  const onSoundTrackToggle = (value) => {
+    setGameState({
+      ...gameState,
+      isSoundEnabled: value,
+    });
+  };
+
   const onGunActivate = () => {
     setGameState({
       ...gameState,
@@ -85,7 +92,6 @@ const Scene = () => {
       isTutorialPassed: 1,
     });
     localStorage.setItem('isTutorialPassed', 1);
-    gameSoundtrack.play();
   };
 
   const initGame = () => {
@@ -97,6 +103,7 @@ const Scene = () => {
       isAnimating: false,
       revolverClasses: ['revolver', 'active'],
       isTutorialPassed: localStorage.getItem('isTutorialPassed'),
+      isSoundEnabled: gameState.isSoundEnabled,
     });
   };
 
@@ -112,6 +119,7 @@ const Scene = () => {
       numberOfShots,
       isGameOver: true,
       revolverClasses: ['revolver', 'exploded'],
+      isSoundEnabled: gameState.isSoundEnabled,
     });
   };
 
@@ -121,10 +129,14 @@ const Scene = () => {
       anime(animeOnGunShoot);
 
       if (shotCounter + 1 === bulletPosition || bulletPosition === 0) {
-        soundBang.play();
+        if (isSoundEnabled) {
+          soundBang.play();
+        }
         gameOver();
       } else {
-        soundEmptyGunshoot.play();
+        if (isSoundEnabled) {
+          soundEmptyGunshoot.play();
+        }
         luckyReaction();
         setGameState({
           ...gameState,
@@ -137,7 +149,9 @@ const Scene = () => {
   };
 
   const onRevolverRefresh = () => {
-    soundGunReload.play();
+    if (isSoundEnabled) {
+      soundGunReload.play();
+    }
     setGameState({
       ...gameState,
       revolverClasses: ['revolver'],
@@ -162,13 +176,17 @@ const Scene = () => {
       tl.add({
         ...animeZoomOutRevolver,
         complete: () => {
-          soundEmptyBullet.play();
+          if (isSoundEnabled) {
+            soundEmptyBullet.play();
+          }
         },
       })
         .add({
           ...animeBulletPath(path),
           complete: () => {
-            soundGunGetReady.play();
+            if (isSoundEnabled) {
+              soundGunGetReady.play();
+            }
           },
         })
         .add({
@@ -184,10 +202,6 @@ const Scene = () => {
         bullet: true,
       });
     }
-
-    return () => {
-      gameSoundtrack.pause();
-    };
   }, [isGameStarted]);
 
   React.useEffect(() => {
@@ -207,24 +221,29 @@ const Scene = () => {
       <div className={isGameOver ? 'scene game-over' : 'scene'}>
         <BulletPath />
         <LuckyHero />
-        {isGameOver && !isAnimating ? <FailHeroVideo /> : null}
+        {isGameOver && !isAnimating ? (
+          <FailHeroVideo muted={!isSoundEnabled} />
+        ) : null}
         {!isTutorialPassed ? (
           <>
             <Hand />
           </>
         ) : null}
-        {isGameStarted ? (
-          <header>
-            <h3 className="shoots-counter">Shots: {numberOfShots}</h3>
-            {isDevMode ? (
-              <>
-                <h3>Bullet position: {bulletPosition}</h3>
-                <h3>shotCounter: {shotCounter}</h3>
-                {!isAnimating && <Button onClick={gameOver}>stop game</Button>}
-              </>
-            ) : null}
-          </header>
-        ) : null}
+
+        <header>
+          <h3 className="shoots-counter">
+            {isGameStarted ? `Shots: ${numberOfShots}` : ''}
+          </h3>
+
+          {isDevMode ? (
+            <>
+              <h3>Bullet position: {bulletPosition}</h3>
+              <h3>shotCounter: {shotCounter}</h3>
+              {!isAnimating && <Button onClick={gameOver}>stop game</Button>}
+            </>
+          ) : null}
+          <GameSoundtrackController actions={{ onSoundTrackToggle }} />
+        </header>
         <div className={'revolver-container'}>
           <Revolver
             onClick={onRevolverClick}
