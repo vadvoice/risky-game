@@ -18,11 +18,11 @@ import {
   animeGunLevitation,
   animeGunSpin,
   animeGunReload,
-  animeBulletPath,
+  animateButtleFall,
+  animateButtleGetIn,
   animeHandHint,
   animeleftBottom,
 } from './animations';
-import { BulletPath } from './assets/bulletPath';
 import { Hand } from './assets/hand';
 import { LuckyHero } from './assets/img/luckyHero';
 import { FailHeroVideo } from './assets/video/failHero';
@@ -182,7 +182,10 @@ const Scene = () => {
         },
       })
         .add({
-          ...animeBulletPath(path),
+          ...animateButtleFall(),
+        })
+        .add({
+          ...animateButtleGetIn(),
           complete: () => {
             if (isSoundEnabled) {
               soundGunGetReady.play();
@@ -212,14 +215,13 @@ const Scene = () => {
   React.useEffect(() => {
     anime({
       targets: '.shoots-counter',
-      scale: [1, 2, 1],
+      scale: [1, 1.2, 1],
     });
   }, [numberOfShots]);
 
   return (
     <>
       <div className={isGameOver ? 'scene game-over' : 'scene'}>
-        <BulletPath />
         <LuckyHero />
         {isGameOver && !isAnimating ? (
           <FailHeroVideo muted={!isSoundEnabled} />
@@ -231,9 +233,10 @@ const Scene = () => {
         ) : null}
 
         <header>
-          <h3 className="shoots-counter">
-            {isGameStarted ? `Shots: ${numberOfShots}` : ''}
-          </h3>
+          <h4 className="shoots-counter">
+            {numberOfShots ? `Attempts: ` : ''}
+            {numberOfShots ? <strong>{numberOfShots}</strong> : null}
+          </h4>
 
           {isDevMode ? (
             <>
@@ -242,7 +245,10 @@ const Scene = () => {
               {!isAnimating && <Button onClick={gameOver}>stop game</Button>}
             </>
           ) : null}
-          <GameSoundtrackController actions={{ onSoundTrackToggle }} />
+          <GameSoundtrackController
+            actions={{ onSoundTrackToggle }}
+            data={{ isSoundEnabled }}
+          />
         </header>
         <div className={'revolver-container'}>
           <Revolver
@@ -250,7 +256,7 @@ const Scene = () => {
             className={revolverClasses.join(' ')}
           />
           {isGameOver && !isAnimating ? (
-            <h3 className="shoots-counter big">Shots: {numberOfShots}</h3>
+            <h3 className="shoots-counter big">Score: {numberOfShots}</h3>
           ) : null}
           {isGameStarted && bullet ? <Bullet className={`bullet`} /> : null}
         </div>

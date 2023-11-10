@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import soundtrack from '../assets/music/soundtrack.wav';
 import classNames from 'classnames';
 
@@ -6,10 +6,19 @@ import './styles.scss';
 import { MusicIcon } from '../assets/img/MusicIcon';
 
 export default function GameSoundtrackController({
+  data: { isSoundEnabled = false },
   actions: { onSoundTrackToggle },
 }) {
-  const [isPlaying, setIsPlaing] = useState(false);
+  const [isPlaying, setIsPlaing] = useState(isSoundEnabled);
   const audioRef = useRef();
+
+  useEffect(() => {
+    if (isPlaying) {
+      audioRef.current.play();
+    } else {
+      audioRef.current.pause();
+    }
+  }, []);
 
   const onTriggerClick = (e) => {
     e.preventDefault();
