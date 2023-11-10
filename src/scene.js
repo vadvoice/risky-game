@@ -212,7 +212,7 @@ const Scene = () => {
   React.useEffect(() => {
     anime({
       targets: '.shoots-counter',
-      scale: [1, 2, 1],
+      scale: [1, 1.2, 1],
     });
   }, [numberOfShots]);
 
@@ -231,9 +231,10 @@ const Scene = () => {
         ) : null}
 
         <header>
-          <h3 className="shoots-counter">
-            {isGameStarted ? `Shots: ${numberOfShots}` : ''}
-          </h3>
+          <h4 className="shoots-counter">
+            {numberOfShots ? `Attempts: ` : ''}
+            {numberOfShots ? <strong>{numberOfShots}</strong> : null}
+          </h4>
 
           {isDevMode ? (
             <>
@@ -250,7 +251,7 @@ const Scene = () => {
             className={revolverClasses.join(' ')}
           />
           {isGameOver && !isAnimating ? (
-            <h3 className="shoots-counter big">Shots: {numberOfShots}</h3>
+            <h3 className="shoots-counter big">Score: {numberOfShots}</h3>
           ) : null}
           {isGameStarted && bullet ? <Bullet className={`bullet`} /> : null}
         </div>

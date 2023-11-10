@@ -7,15 +7,17 @@ html {
   font-size: 17px;
 }
 
-body, #root {
+body,
+#root {
   height: 100vh;
   width: 100vw;
 }
 
 header {
-  padding: .5em;
+  padding: 0.5em;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   position: absolute;
   text-align: end;
   width: 100%;
@@ -23,24 +25,32 @@ header {
   left: 0;
   box-sizing: border-box;
   color: rgb(233, 233, 233);
-}
 
+  .shoots-counter {
+    padding-left: 1.5rem;
+    font-weight: 300;
+    margin: 0;
+    strong {
+      font-weight: bold;
+    }
+  }
+}
 
 /* scene */
 .scene {
   perspective: 200px;
   /* animated gradient */
   background: linear-gradient(-45deg, #723187, #441199, #23a6d5, #23d5ab);
-	background-size: 400% 400%;
+  background-size: 400% 400%;
   animation: gradient 10s ease infinite;
-  
+
   width: inherit;
   height: inherit;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  transition: all .4s;
+  transition: all 0.4s;
   overflow: hidden;
   &.game-over {
     background: linear-gradient(-65deg, #e73c7e 0%, red 71%, #e73c7e 100%);
@@ -56,7 +66,8 @@ header {
     position: absolute;
     opacity: 0;
   }
-  svg, path {
+  svg,
+  path {
     width: 100%;
     height: 100%;
   }
@@ -80,17 +91,16 @@ header {
   padding: 1em;
 }
 
-
 @keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* hand */

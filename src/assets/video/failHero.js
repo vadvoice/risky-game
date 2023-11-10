@@ -1,15 +1,16 @@
-import * as React from "react";
-import videoHero from "./owch.mp4";
+import * as React from 'react';
+import videoHero from './owch.mp4';
 
 export const FailHeroVideo = ({ muted }) => {
   return (
     <video
+      playsInline
       style={{
-        position: "fixed",
+        position: 'fixed',
         right: 0,
         bottom: 0,
-        minWidth: "100%",
-        minHeight: "100%"
+        minWidth: '100%',
+        minHeight: '100%',
       }}
       autoPlay
       muted={muted}
