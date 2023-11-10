@@ -18,11 +18,11 @@ import {
   animeGunLevitation,
   animeGunSpin,
   animeGunReload,
-  animeBulletPath,
+  animateButtleFall,
+  animateButtleGetIn,
   animeHandHint,
   animeleftBottom,
 } from './animations';
-import { BulletPath } from './assets/bulletPath';
 import { Hand } from './assets/hand';
 import { LuckyHero } from './assets/img/luckyHero';
 import { FailHeroVideo } from './assets/video/failHero';
@@ -182,7 +182,10 @@ const Scene = () => {
         },
       })
         .add({
-          ...animeBulletPath(path),
+          ...animateButtleFall(),
+        })
+        .add({
+          ...animateButtleGetIn(),
           complete: () => {
             if (isSoundEnabled) {
               soundGunGetReady.play();
@@ -219,7 +222,6 @@ const Scene = () => {
   return (
     <>
       <div className={isGameOver ? 'scene game-over' : 'scene'}>
-        <BulletPath />
         <LuckyHero />
         {isGameOver && !isAnimating ? (
           <FailHeroVideo muted={!isSoundEnabled} />
@@ -243,7 +245,10 @@ const Scene = () => {
               {!isAnimating && <Button onClick={gameOver}>stop game</Button>}
             </>
           ) : null}
-          <GameSoundtrackController actions={{ onSoundTrackToggle }} />
+          <GameSoundtrackController
+            actions={{ onSoundTrackToggle }}
+            data={{ isSoundEnabled }}
+          />
         </header>
         <div className={'revolver-container'}>
           <Revolver
