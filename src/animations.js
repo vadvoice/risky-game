@@ -71,7 +71,7 @@ export const animateButtleGetIn = () => ({
 export const animeHandHint = {
   targets: '.hand',
   translateX: [140, 80],
-  translateY: [-20, 150],
+  translateY: [-20, 220],
   rotateZ: [0, -60],
   translateZ: [0, -100],
   easing: 'linear',
