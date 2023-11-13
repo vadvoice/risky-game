@@ -6,8 +6,4 @@ import './styles.scss';
 import { Scene } from './scene';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <Scene />
-  </React.StrictMode>
-);
+root.render(<Scene />);

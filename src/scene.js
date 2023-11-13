@@ -28,9 +28,9 @@ import { LuckyHero } from './assets/img/luckyHero';
 import { FailHeroVideo } from './assets/video/failHero';
 import { useSeoHook } from './hooks/seoHook';
 import GameSoundtrackController from './gameSoundTrack';
+import useDriverHook from './hooks/useDriver';
 
 const Scene = () => {
-  // const gameSoundtrack = soundGameSoundtrack();
   useSeoHook({ title: ['Risky Revolver', 'Take your risk'] });
   const initialGameState = {
     revolverClasses: ['revolver'],
@@ -63,6 +63,7 @@ const Scene = () => {
     isSoundEnabled,
     isDevMode,
   } = gameState;
+  const appDriver = React.useMemo(() => useDriverHook(), []);
 
   const getRandomPosition = (min = 0, max = 6) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -92,6 +93,9 @@ const Scene = () => {
       isTutorialPassed: 1,
     });
     localStorage.setItem('isTutorialPassed', 1);
+    if (appDriver.isActive()) {
+      appDriver.moveNext();
+    }
   };
 
   const initGame = () => {
@@ -124,6 +128,10 @@ const Scene = () => {
   };
 
   const onRevolverClick = () => {
+    if (appDriver.isActive()) {
+      appDriver.moveNext();
+      return;
+    }
     if (isGameStarted && !isAnimating && revolverClasses.includes('active')) {
       // SHOOT
       anime(animeOnGunShoot);
@@ -168,6 +176,9 @@ const Scene = () => {
         });
       },
     });
+    if (appDriver.isActive()) {
+      appDriver.moveNext();
+    }
   };
 
   React.useEffect(() => {
@@ -208,7 +219,7 @@ const Scene = () => {
   }, [isGameStarted]);
 
   React.useEffect(() => {
-    if (!isTutorialPassed) {
+    if (isTutorialPassed) {
       anime(animeHandHint);
     }
   }, [isTutorialPassed]);
@@ -226,13 +237,13 @@ const Scene = () => {
         {isGameOver && !isAnimating ? (
           <FailHeroVideo muted={!isSoundEnabled} />
         ) : null}
-        {!isTutorialPassed ? (
+        {isTutorialPassed && !isGameStarted ? (
           <>
             <Hand />
           </>
         ) : null}
 
-        <header>
+        <header className="scene__header">
           <h4 className="shoots-counter">
             {numberOfShots ? `Attempts: ` : ''}
             {numberOfShots ? <strong>{numberOfShots}</strong> : null}
@@ -256,7 +267,10 @@ const Scene = () => {
             className={revolverClasses.join(' ')}
           />
           {isGameOver && !isAnimating ? (
-            <h3 className="shoots-counter big">Score: {numberOfShots}</h3>
+            <>
+              <h3 className="shoots-counter big">Score: {numberOfShots}</h3>
+              <p className="revolver-container__desc">minus one... not your day</p>
+            </>
           ) : null}
           {isGameStarted && bullet ? <Bullet className={`bullet`} /> : null}
         </div>
@@ -271,6 +285,7 @@ const Scene = () => {
           ) : null}
         </div>
         <footer
+          className="scene__footer"
           onClick={() =>
             window.open('https://github.com/vadvoice', '_blank').focus()
           }
