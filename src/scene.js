@@ -29,6 +29,7 @@ import { FailHeroVideo } from './assets/video/failHero';
 import { useSeoHook } from './hooks/seoHook';
 import GameSoundtrackController from './gameSoundTrack';
 import useDriverHook from './hooks/useDriver';
+import { TakeTour } from './takeTour';
 
 const Scene = () => {
   useSeoHook({ title: ['Risky Revolver', 'Take your risk'] });
@@ -181,6 +182,14 @@ const Scene = () => {
     }
   };
 
+  const takeTour = () => {
+    setGameState({
+      ...gameState,
+      isTutorialPassed: 1,
+    });
+    localStorage.setItem('isTutorialPassed', !gameState.isTutorialPassed);
+  };
+
   React.useEffect(() => {
     if (isGameStarted) {
       const path = anime.path('.bullet-path path');
@@ -260,6 +269,7 @@ const Scene = () => {
             actions={{ onSoundTrackToggle }}
             data={{ isSoundEnabled }}
           />
+          <TakeTour onClick={takeTour} />
         </header>
         <div className={'revolver-container'}>
           <Revolver
@@ -269,7 +279,9 @@ const Scene = () => {
           {isGameOver && !isAnimating ? (
             <>
               <h3 className="shoots-counter big">Score: {numberOfShots}</h3>
-              <p className="revolver-container__desc">minus one... not your day</p>
+              <p className="revolver-container__desc">
+                minus one... not your day
+              </p>
             </>
           ) : null}
           {isGameStarted && bullet ? <Bullet className={`bullet`} /> : null}
